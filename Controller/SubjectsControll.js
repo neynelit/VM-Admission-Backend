@@ -17,9 +17,7 @@ exports.saveSubject = async(req, res) => {
         subject: req.body.subject,
         courseType: req.body.courseType,
         amount: req.body.amount,
-        capacity: req.body.capacity,
-        semester: req.body.semester,
-        admission_status: req.body.admission_status
+        capacity: req.body.capacity
     })
     try {
         const saveSubject = await data.save()
@@ -40,9 +38,7 @@ exports.updateSubject = async(req, res) => {
                     subject: req.body.subject,
                     courseType: req.body.courseType,
                     amount: req.body.amount,
-                    capacity: req.body.capacity,
-                    semester: req.body.semester,
-                    admission_status: req.body.admission_status
+                    capacity: req.body.capacity
                 }
             }
         )
