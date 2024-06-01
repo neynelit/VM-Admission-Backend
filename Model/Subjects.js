@@ -1,7 +1,10 @@
 const mongoose = require('mongoose')
 
 const Amounts = new mongoose.Schema({
-    semester: { type: String },
+    semester: {
+        type: String,
+        default: 'Semester 1'
+    },
     bc_i: {
         type: Number,
         default: 0
@@ -29,6 +32,10 @@ const Amounts = new mongoose.Schema({
     admission_status: {
         type: Boolean,
         default: false
+    },
+    capacity: {
+        type: Number,
+        default: 0
     }
 })
 
@@ -38,11 +45,7 @@ const Subjects = new mongoose.Schema({
         type: String,
         default: 'UG'
     },
-    amount: [Amounts],
-    capacity: {
-        type: Number,
-        default: 0
-    }
+    amount: [Amounts]
     
 })
 

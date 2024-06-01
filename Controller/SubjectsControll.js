@@ -11,13 +11,27 @@ exports.getAllSubjects = async(req, res) => {
     }
 }
 
+//find a subject by subject and courseType
+exports.findSubject = async(req, res) => {
+    const data = {
+        subject: req.body.subject,
+        courseType: req.body.courseType
+    }
+    try {
+        const findSubject = await Subjects.findOne({ subject: data.subject, courseType: data.courseType })
+        res.json(findSubject)
+    }
+    catch (err){
+        message: err
+    }
+}
+
 //save a subject
 exports.saveSubject = async(req, res) => {
     const data = new Subjects({
         subject: req.body.subject,
         courseType: req.body.courseType,
-        amount: req.body.amount,
-        capacity: req.body.capacity
+        amount: req.body.amount
     })
     try {
         const saveSubject = await data.save()
@@ -37,8 +51,7 @@ exports.updateSubject = async(req, res) => {
                 $set: {
                     subject: req.body.subject,
                     courseType: req.body.courseType,
-                    amount: req.body.amount,
-                    capacity: req.body.capacity
+                    amount: req.body.amount
                 }
             }
         )

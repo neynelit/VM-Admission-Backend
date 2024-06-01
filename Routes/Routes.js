@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 
-const { getAllSubjects, saveSubject, updateSubject, updateAllSubjects, deleteSubject } = require('../Controller/SubjectsControll')
+const { getAllSubjects, findSubject, saveSubject, updateSubject, updateAllSubjects, deleteSubject } = require('../Controller/SubjectsControll')
 
 const { getAllStudents, checkSingleStudent, findStudent, getSingleStudent, getSingleRegStudent, addStudent, addMultipleStudents, updateStudent, deleteStudent } = require('../Controller/StudentsControl')
 
@@ -27,6 +27,7 @@ router.delete('/delete-student/:postId', deleteStudent) // delete a students dat
 
 //subject routes
 router.get('/subjects', getAllSubjects) //get all the subjects list
+router.post('/find-subject', findSubject) //find a subject by subject and courseType
 router.post('/save-subject', saveSubject) //save a subject on database
 router.patch('/update-subject/:postId', updateSubject) //update a subject on database
 router.patch('/update-all-subjects', updateAllSubjects) //update all subject on database

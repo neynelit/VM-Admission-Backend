@@ -10,6 +10,7 @@ const Students = new mongoose.Schema({
     mother_mobile: { type: String },
     registration_no: { type: Number },
     course: { type: String },
+    courseType: { type: String },
     year: { type: String },
     roll: { type: String },
     amount: { type: Number },
