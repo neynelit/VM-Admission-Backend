@@ -7,7 +7,7 @@ const Openclose = new mongoose.Schema({
     },
     programme: {
         type: String,
-        default: 'Graduation'
+        default: 'UG'
     },
     semester: { type: String },
     status: {
