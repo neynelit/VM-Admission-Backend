@@ -1,5 +1,19 @@
 const mongoose = require('mongoose')
 
+const paymentSemester = new mongoose.Schema({
+    semester: { type: String },
+    amount: { type: Number },
+    payment_status: {
+        type: Boolean,
+        default: false
+    },
+    transaction_id: { type: String },
+    paymentMode: { type: String },
+    sabpaisaTxnId: { type: String },
+    bankTxnId: { type: String },
+    transDate: { type: Date }
+})
+
 const Students = new mongoose.Schema({
     name: { type: String },
     father_name: { type: String },
@@ -60,7 +74,12 @@ const Students = new mongoose.Schema({
     admission_status: {
         type: Boolean,
         default: false
-    }
+    },
+
+    photo: { type: String },
+    signature: { type: String },
+
+    payment_status: [paymentSemester]
 })
 
 module.exports = mongoose.model('Students', Students)

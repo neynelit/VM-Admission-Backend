@@ -12,6 +12,10 @@ const Routes = require('./Routes/Routes')
 app.use(bodyParser.json())
 app.use('/', Routes)
 
+app.set('view engine', 'ejs')
+app.get('/', (req, res) => res.render('index'))
+app.use('/images', express.static('uploads'));
+
 mongoose
     .connect(process.env.MONGODB_URL)
     .then(() => {

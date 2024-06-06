@@ -121,7 +121,11 @@ exports.addStudent = async(req, res) => {
         hs_marks: req.body.hs_marks,
         gender: req.body.gender,
         session: req.body.session,
-        admission_status: req.body.admission_status
+        admission_status: req.body.admission_status,
+
+        photo: req.body.photo,
+        signature: req.body.signature,
+        payment_status: req.body.payment_status
     })
     try {
         const addStudent = await data.save()
@@ -198,7 +202,11 @@ exports.updateStudent = async(req, res) => {
                     hs_marks: req.body.hs_marks,
                     gender: req.body.gender,
                     session: req.body.session,
-                    admission_status: req.body.admission_status
+                    admission_status: req.body.admission_status,
+
+                    photo: req.body.photo,
+                    signature: req.body.signature,
+                    payment_status: req.body.payment_status
                 }
             }
         )
@@ -215,6 +223,30 @@ exports.deleteStudent = async(req, res) => {
     try {
         const data = await Students.deleteOne({ _id: req.params.postId})
         res.json(data)
+    }
+    catch (err){
+        message: err
+    }
+}
+//delete a student data
+exports.deleteAll = async(req, res) => {
+    try {
+        const data = await Students.deleteMany({ year: 'Part 3'})
+        res.json(data)
+    }
+    catch (err){
+        message: err
+    }
+}
+
+exports.uploadFiles = async(req, res) => {
+    try {
+        if(req.files){
+            res.json({
+                photo: req.files.photo[0].filename,
+                signature: req.files.signature[0].filename
+            })
+        }
     }
     catch (err){
         message: err

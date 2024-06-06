@@ -1,9 +1,18 @@
 const express = require('express')
 const router = express.Router()
+const multer = require('multer')
+const path = require('path')
+const app = express()
+const bodyParser = require('body-parser')
+
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
+
+app.use(express.static('uploads'))
 
 const { getAllSubjects, findSubject, saveSubject, updateSubject, deleteSubject } = require('../Controller/SubjectsControll')
 
-const { getAllStudents, checkSingleStudent, findStudent, getSingleStudent, getSingleRegStudent, addStudent, addMultipleStudents, updateStudent, deleteStudent } = require('../Controller/StudentsControl')
+const { getAllStudents, checkSingleStudent, findStudent, getSingleStudent, getSingleRegStudent, addStudent, addMultipleStudents, updateStudent, deleteStudent, uploadFiles, deleteAll } = require('../Controller/StudentsControl')
 
 const { getAllAdmin, searchAdmin, searchAnyAdmin, loginAdmin, signupAdmin, updateAdmin, updateAdminPassword, deleteAdmin } = require('../Controller/AdminControl')
 
@@ -23,6 +32,37 @@ router.post('/add-student', addStudent) // add a student data
 router.post('/add-multiple-students', addMultipleStudents) // add a student data
 router.patch('/update-student/:postId', updateStudent) //update a student data
 router.delete('/delete-student/:postId', deleteStudent) // delete a students data
+router.delete('/delete', deleteAll) // delete a students data
+
+const storage = multer.diskStorage({
+    destination: function(req, file, cb){
+        if(file.mimetype == 'image/jpeg' || file.mimetype == 'image/jpeg' || file.mimetype == 'image/png') cb(null, 'uploads')
+
+        else cb(null, false)
+    },
+    filename: function(req, file, cb){
+        cb(null, file.fieldname + '_' + `${req.body.registration_no}` + '_' + Date.now() + path.extname(file.originalname))
+    }
+})
+
+const fileFilter = (req, file, cb) => {
+    if(file.fieldname == 'photo' || file.fieldname == 'signature'){
+        if(file.mimetype == 'image/jpeg' || file.mimetype == 'image/jpeg' || file.mimetype == 'image/png') cb(null, true)
+        else cb(null, false)
+    }
+    else cb(null, false)
+}
+
+const uploadHandler = multer({ storage, limits: { fileSize: 1024 * 1024 * 10 }, fileFilter: fileFilter })
+
+const multipleUploads = uploadHandler.fields(
+    [
+        { name: 'photo', maxCount: 1 },
+        { name: 'signature', maxCount: 1 }
+    ]
+)
+
+router.post('/upload', multipleUploads, uploadFiles) //upload a student files
 
 
 //subject routes
